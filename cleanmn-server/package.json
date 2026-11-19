@@ -1,0 +1,13 @@
+{
+  "name": "cleanmn-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CleanMN захиалга + QPay v2 backend (гадны сангүй, Node 18+)",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=18" }
+}
