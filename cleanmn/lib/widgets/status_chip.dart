@@ -25,6 +25,8 @@ class StatusChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(status.label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(color: color, fontWeight: FontWeight.w600, fontSize: 12)),
     );
   }

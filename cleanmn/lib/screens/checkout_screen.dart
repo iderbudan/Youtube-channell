@@ -6,6 +6,7 @@ import '../models/order.dart';
 import '../state/cart_provider.dart';
 import '../state/orders_provider.dart';
 import '../utils/format.dart';
+import '../widgets/summary_row.dart';
 import '../utils/validators.dart';
 import 'payment_screen.dart';
 
@@ -104,6 +105,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           gap,
           DropdownButtonFormField<String>(
             initialValue: _district,
+            isExpanded: true,
             decoration: const InputDecoration(labelText: 'Дүүрэг (Улаанбаатар)', prefixIcon: Icon(Icons.location_city_outlined)),
             items: [for (final d in ulaanbaatarDistricts) DropdownMenuItem(value: d, child: Text(d))],
             onChanged: (v) => setState(() => _district = v),
@@ -175,12 +177,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  Widget _line(String a, String b, {bool bold = false}) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 3),
-        child: Row(children: [
-          Text(a, style: TextStyle(fontWeight: bold ? FontWeight.w700 : null)),
-          const Spacer(),
-          Text(b, style: TextStyle(fontWeight: bold ? FontWeight.w800 : FontWeight.w500)),
-        ]),
-      );
+  Widget _line(String a, String b, {bool bold = false}) =>
+      SummaryRow(a, b, bold: bold);
 }

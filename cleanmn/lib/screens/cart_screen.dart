@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../state/cart_provider.dart';
 import '../utils/format.dart';
+import '../widgets/summary_row.dart';
 import '../widgets/product_image.dart';
 import '../widgets/quantity_stepper.dart';
 import 'checkout_screen.dart';
@@ -90,9 +91,15 @@ class CartScreen extends StatelessWidget {
                                   value: item.quantity,
                                   onChanged: (v) => cart.setQuantity(item.product.id, v),
                                 ),
-                                const Spacer(),
-                                Text(formatMnt(item.total),
-                                    style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: FittedBox(
+                                    alignment: Alignment.centerRight,
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(formatMnt(item.total),
+                                        style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
+                                  ),
+                                ),
                               ]),
                             ]),
                           ),
@@ -124,14 +131,8 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _row(String a, String b, {bool bold = false}) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 2),
-        child: Row(children: [
-          Text(a, style: TextStyle(fontWeight: bold ? FontWeight.w700 : null, fontSize: bold ? 17 : 14)),
-          const Spacer(),
-          Text(b, style: TextStyle(fontWeight: bold ? FontWeight.w800 : FontWeight.w500, fontSize: bold ? 17 : 14)),
-        ]),
-      );
+  Widget _row(String a, String b, {bool bold = false}) =>
+      SummaryRow(a, b, bold: bold, large: true);
 }
 
 class _FreeDeliveryHint extends StatelessWidget {

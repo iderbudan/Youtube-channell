@@ -26,11 +26,17 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Row(children: [
-                  Text('Clean', style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
-                  Text('MN',
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w800, color: theme.colorScheme.primary)),
-                  const Spacer(),
+                  Expanded(
+                    child: Text.rich(
+                      TextSpan(children: [
+                        const TextSpan(text: 'Clean'),
+                        TextSpan(text: 'MN', style: TextStyle(color: theme.colorScheme.primary)),
+                      ]),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
+                    ),
+                  ),
                   if (AppConfig.useMock)
                     const Chip(label: Text('Демо'), visualDensity: VisualDensity.compact),
                 ]),
@@ -89,11 +95,13 @@ class HomeScreen extends StatelessWidget {
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
               sliver: SliverGrid(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                // Том фонттой үед карт өндөрсөнө (текст таслагдахгүй).
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 220,
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
-                  childAspectRatio: 0.66,
+                  childAspectRatio:
+                      0.62 / MediaQuery.textScalerOf(context).scale(1).clamp(1.0, 2.0),
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (_, i) => ProductCard(product: products[i]),

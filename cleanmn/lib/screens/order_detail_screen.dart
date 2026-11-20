@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../models/order.dart';
 import '../state/orders_provider.dart';
 import '../utils/format.dart';
+import '../widgets/summary_row.dart';
 import '../widgets/status_chip.dart';
 import '../widgets/status_timeline.dart';
 import 'payment_screen.dart';
@@ -64,9 +65,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         onRefresh: _refresh,
         child: ListView(padding: const EdgeInsets.all(16), children: [
           Row(children: [
-            Text('Төлөв', style: theme.textTheme.titleMedium),
-            const Spacer(),
-            StatusChip(status: order.status),
+            Expanded(child: Text('Төлөв', style: theme.textTheme.titleMedium)),
+            Flexible(flex: 3, child: StatusChip(status: order.status)),
           ]),
           const SizedBox(height: 16),
           Card(child: Padding(padding: const EdgeInsets.all(16), child: StatusTimeline(order: order))),
@@ -122,12 +122,6 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     );
   }
 
-  Widget _line(String a, String b, {bool bold = false}) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 3),
-        child: Row(children: [
-          Text(a, style: TextStyle(fontWeight: bold ? FontWeight.w700 : null)),
-          const Spacer(),
-          Text(b, style: TextStyle(fontWeight: bold ? FontWeight.w800 : null)),
-        ]),
-      );
+  Widget _line(String a, String b, {bool bold = false}) =>
+      SummaryRow(a, b, bold: bold);
 }
