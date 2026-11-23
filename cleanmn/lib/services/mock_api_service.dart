@@ -19,8 +19,7 @@ class MockApiService implements ApiService {
   final _rand = Random();
   int _seq = 240000;
 
-  Future<void> _latency() =>
-      Future.delayed(Duration(milliseconds: 300 + _rand.nextInt(400)));
+  Future<void> _latency() => Future.delayed(Duration(milliseconds: 300 + _rand.nextInt(400)));
 
   @override
   Future<List<Product>> fetchProducts() async {
@@ -33,8 +32,10 @@ class MockApiService implements ApiService {
     await _latency();
     if (items.isEmpty) throw ApiException('Сагс хоосон байна');
     final lines = items.map((i) {
-      final p = demoCatalog.firstWhere((p) => p.id == i.productId,
-          orElse: () => throw ApiException('Бүтээгдэхүүн олдсонгүй'));
+      final p = demoCatalog.firstWhere(
+        (p) => p.id == i.productId,
+        orElse: () => throw ApiException('Бүтээгдэхүүн олдсонгүй'),
+      );
       return OrderLine(productId: p.id, name: '${p.name} (${p.unit})', price: p.price, quantity: i.quantity);
     }).toList();
     final subtotal = lines.fold<int>(0, (s, l) => s + l.total);
@@ -96,10 +97,7 @@ class MockApiService implements ApiService {
     var o = _orders[id];
     if (o == null) throw ApiException('Захиалга олдсонгүй');
     // Демо: төлөгдсөнөөс хойш 20 секунд тутамд нэг алхам ахина.
-    final paidAt = o.history
-        .where((h) => h.status == OrderStatus.paid)
-        .map((h) => h.at)
-        .firstOrNull;
+    final paidAt = o.history.where((h) => h.status == OrderStatus.paid).map((h) => h.at).firstOrNull;
     if (paidAt != null && o.status != OrderStatus.cancelled) {
       const steps = [OrderStatus.preparing, OrderStatus.delivering, OrderStatus.delivered];
       final elapsed = DateTime.now().difference(paidAt).inSeconds;

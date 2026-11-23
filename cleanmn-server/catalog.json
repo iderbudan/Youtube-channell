@@ -2,142 +2,222 @@
   {
     "id": "p01",
     "name": "Гарын шингэн саван",
-    "category": "soap",
+    "category": "household",
     "price": 6500,
     "unit": "500мл",
     "emoji": "🧴",
     "description": "Арьс хуурайшуулахгүй, алоэ вератай шингэн саван. Шахуургатай сав.",
-    "inStock": true
+    "inStock": true,
+    "orderCount": 412
   },
   {
     "id": "p02",
     "name": "Хүүхдийн саван",
-    "category": "soap",
+    "category": "household",
     "price": 2900,
     "unit": "90г",
     "emoji": "🧼",
     "description": "Үнэргүй, гипоаллерген хүүхдийн хатуу саван.",
-    "inStock": true
+    "inStock": true,
+    "orderCount": 198
   },
   {
     "id": "p03",
     "name": "Байгалийн гар саван (3ш)",
-    "category": "soap",
+    "category": "household",
     "price": 8900,
     "unit": "3×100г",
     "emoji": "🧼",
     "description": "Чацаргана, лаванда, гаа — 3 төрлийн байгалийн саван.",
-    "inStock": true
+    "inStock": true,
+    "orderCount": 87
   },
   {
     "id": "p04",
     "name": "Угаалгын нунтаг",
-    "category": "detergent",
+    "category": "household",
     "price": 24900,
     "unit": "3кг",
     "emoji": "📦",
     "description": "Автомат болон гар угаалгад тохиромжтой, 40 удаагийн хэрэглээ.",
-    "inStock": true
+    "inStock": true,
+    "orderCount": 365
   },
   {
     "id": "p05",
     "name": "Шингэн угаалгын бодис",
-    "category": "detergent",
+    "category": "household",
     "price": 19500,
     "unit": "2л",
     "emoji": "🫧",
     "description": "Өнгөт хувцасны өнгө хадгалах шингэн бодис.",
-    "inStock": true
+    "inStock": true,
+    "orderCount": 154
   },
   {
     "id": "p06",
     "name": "Аяга таваг угаагч",
-    "category": "detergent",
+    "category": "household",
     "price": 7800,
     "unit": "1л",
     "emoji": "🍽️",
     "description": "Тос сайн арилгадаг, нимбэгний үнэртэй.",
-    "inStock": true
+    "inStock": true,
+    "orderCount": 388
   },
   {
     "id": "p07",
     "name": "Шал арчуур + хувин",
-    "category": "broom",
+    "category": "household",
     "price": 45000,
     "unit": "иж бүрдэл",
     "emoji": "🪣",
     "description": "Эргэдэг шахагчтай хувин, микрофибр толгойтой моп.",
-    "inStock": true
+    "inStock": true,
+    "orderCount": 76
   },
   {
     "id": "p08",
     "name": "Шүүр + хогийн хүрз",
-    "category": "broom",
+    "category": "household",
     "price": 15900,
     "unit": "иж бүрдэл",
     "emoji": "🧹",
     "description": "Урт иштэй шүүр, резин ирмэгтэй хүрз.",
-    "inStock": true
+    "inStock": true,
+    "orderCount": 121
   },
   {
     "id": "p09",
     "name": "Микрофибр арчуур (5ш)",
-    "category": "broom",
+    "category": "household",
     "price": 9900,
     "unit": "5ш",
     "emoji": "🧽",
     "description": "Гал тогоо, шил, тавилганд зориулсан 30×30см арчуур.",
-    "inStock": true
-  },
-  {
-    "id": "p10",
-    "name": "Ариутгагч спрей",
-    "category": "disinfectant",
-    "price": 8500,
-    "unit": "500мл",
-    "emoji": "🧪",
-    "description": "Гадаргуугийн бактерийн 99.9%-ийг устгана.",
-    "inStock": true
-  },
-  {
-    "id": "p11",
-    "name": "Гар ариутгагч гель",
-    "category": "disinfectant",
-    "price": 5900,
-    "unit": "250мл",
-    "emoji": "🫙",
-    "description": "70% спирттэй, арьс чийгшүүлэгчтэй гель.",
-    "inStock": true
-  },
-  {
-    "id": "p12",
-    "name": "Хлортой цайруулагч",
-    "category": "disinfectant",
-    "price": 4500,
-    "unit": "1л",
-    "emoji": "🧴",
-    "description": "Ариун цэврийн өрөө, шал ариутгах, цайруулах бодис.",
-    "inStock": true
+    "inStock": true,
+    "orderCount": 243
   },
   {
     "id": "p13",
     "name": "Нүүрний алчуур",
-    "category": "towel",
+    "category": "household",
     "price": 12900,
     "unit": "50×90см",
     "emoji": "🧺",
     "description": "100% хөвөн, зөөлөн, ус сайн шингээдэг.",
-    "inStock": true
+    "inStock": true,
+    "orderCount": 64
   },
   {
     "id": "p14",
     "name": "Банны том алчуур",
-    "category": "towel",
+    "category": "household",
     "price": 32000,
     "unit": "70×140см",
     "emoji": "🛁",
     "description": "Зузаан хөвөн банны алчуур.",
-    "inStock": true
+    "inStock": true,
+    "orderCount": 58
+  },
+  {
+    "id": "p10",
+    "name": "Ариутгагч спрей",
+    "category": "disinfection",
+    "price": 8500,
+    "unit": "500мл",
+    "emoji": "🧪",
+    "description": "Гадаргуугийн бактерийн 99.9%-ийг устгана.",
+    "inStock": true,
+    "orderCount": 276
+  },
+  {
+    "id": "p11",
+    "name": "Гар ариутгагч гель",
+    "category": "disinfection",
+    "price": 5900,
+    "unit": "250мл",
+    "emoji": "🫙",
+    "description": "70% спирттэй, арьс чийгшүүлэгчтэй гель.",
+    "inStock": true,
+    "orderCount": 301
+  },
+  {
+    "id": "p12",
+    "name": "Хлортой цайруулагч",
+    "category": "disinfection",
+    "price": 4500,
+    "unit": "1л",
+    "emoji": "🧴",
+    "description": "Ариун цэврийн өрөө, шал ариутгах, цайруулах бодис.",
+    "inStock": true,
+    "orderCount": 189
+  },
+  {
+    "id": "p17",
+    "name": "Ариутгалын салфетка (80ш)",
+    "category": "disinfection",
+    "price": 4200,
+    "unit": "80ш",
+    "emoji": "🧻",
+    "description": "Спирттэй нойтон салфетка, гар болон гадаргууд.",
+    "inStock": true,
+    "orderCount": 167
+  },
+  {
+    "id": "p18",
+    "name": "Усан будаг (цагаан)",
+    "category": "construction",
+    "price": 38000,
+    "unit": "4л",
+    "emoji": "🪣",
+    "description": "Дотор ханын угаагдах усан будаг, хурдан хатна.",
+    "inStock": true,
+    "orderCount": 45
+  },
+  {
+    "id": "p19",
+    "name": "Будгийн булийн иж бүрдэл",
+    "category": "construction",
+    "price": 14500,
+    "unit": "иж бүрдэл",
+    "emoji": "🖌️",
+    "description": "Бул, сав, 2 бийр — ханын будгийн ажилд.",
+    "inStock": true,
+    "orderCount": 52
+  },
+  {
+    "id": "p20",
+    "name": "Шпаклёвка",
+    "category": "construction",
+    "price": 21000,
+    "unit": "5кг",
+    "emoji": "🧱",
+    "description": "Хана тэгшлэх бэлэн шпаклёвка.",
+    "inStock": true,
+    "orderCount": 31
+  },
+  {
+    "id": "p21",
+    "name": "Силикон чигжээс",
+    "category": "construction",
+    "price": 9800,
+    "unit": "280мл",
+    "emoji": "🔧",
+    "description": "Угаалтуур, ванны завсар чигжих ус нэвтрүүлэхгүй силикон.",
+    "inStock": true,
+    "orderCount": 39
+  },
+  {
+    "id": "p22",
+    "name": "Будгийн тууз (3ш)",
+    "category": "construction",
+    "price": 6500,
+    "unit": "3×50м",
+    "emoji": "📏",
+    "description": "Будах үед ирмэг хамгаалах цаасан тууз.",
+    "inStock": true,
+    "orderCount": 28
   },
   {
     "id": "p15",
@@ -147,7 +227,8 @@
     "unit": "1 хос",
     "emoji": "🧤",
     "description": "Цэвэрлэгээний урт резин бээлий, M/L хэмжээ.",
-    "inStock": true
+    "inStock": true,
+    "orderCount": 214
   },
   {
     "id": "p16",
@@ -157,6 +238,7 @@
     "unit": "30ш",
     "emoji": "🗑️",
     "description": "Бат бөх, уяатай хогийн уут.",
-    "inStock": true
+    "inStock": true,
+    "orderCount": 332
   }
 ]

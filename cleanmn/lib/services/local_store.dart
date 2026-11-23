@@ -10,8 +10,7 @@ class LocalStore {
   LocalStore(this._prefs);
   final SharedPreferences _prefs;
 
-  static Future<LocalStore> open() async =>
-      LocalStore(await SharedPreferences.getInstance());
+  static Future<LocalStore> open() async => LocalStore(await SharedPreferences.getInstance());
 
   static const _cartKey = 'cart_v1';
   static const _deliveryKey = 'delivery_v1';
@@ -31,8 +30,7 @@ class LocalStore {
     }
   }
 
-  Future<void> saveDelivery(DeliveryInfo d) =>
-      _prefs.setString(_deliveryKey, jsonEncode(d.toJson()));
+  Future<void> saveDelivery(DeliveryInfo d) => _prefs.setString(_deliveryKey, jsonEncode(d.toJson()));
 
   List<Order> loadOrders() => _readList(_ordersKey, Order.fromJson);
   Future<void> saveOrders(List<Order> orders) =>

@@ -14,8 +14,7 @@ import 'theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final store = await LocalStore.open();
-  final ApiService api =
-      AppConfig.useMock ? MockApiService() : HttpApiService(AppConfig.apiBaseUrl);
+  final ApiService api = AppConfig.useMock ? MockApiService() : HttpApiService(AppConfig.apiBaseUrl);
   runApp(CleanMNApp(api: api, store: store));
 }
 

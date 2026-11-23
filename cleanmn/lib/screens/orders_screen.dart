@@ -33,12 +33,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
       body: RefreshIndicator(
         onRefresh: provider.refreshActive,
         child: orders.isEmpty
-            ? ListView(children: [
-                const SizedBox(height: 120),
-                Icon(Icons.receipt_long_outlined, size: 64, color: theme.colorScheme.outline),
-                const SizedBox(height: 12),
-                const Text('Захиалга алга байна', textAlign: TextAlign.center),
-              ])
+            ? ListView(
+                children: [
+                  const SizedBox(height: 120),
+                  Icon(Icons.receipt_long_outlined, size: 64, color: theme.colorScheme.outline),
+                  const SizedBox(height: 12),
+                  const Text('Захиалга алга байна', textAlign: TextAlign.center),
+                ],
+              )
             : ListView.separated(
                 padding: const EdgeInsets.all(16),
                 itemCount: orders.length,
@@ -60,29 +62,46 @@ class _OrderTile extends StatelessWidget {
     return Card(
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => OrderDetailScreen(orderId: order.id))),
+        onTap: () => Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (_) => OrderDetailScreen(orderId: order.id))),
         child: Padding(
           padding: const EdgeInsets.all(14),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(children: [
-              Text(order.number, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
-              const Spacer(),
-              StatusChip(status: order.status),
-            ]),
-            const SizedBox(height: 6),
-            Text('${formatDateTime(order.createdAt)} · ${order.itemCount} бараа',
-                style: theme.textTheme.bodySmall),
-            const SizedBox(height: 4),
-            Row(children: [
-              Expanded(
-                child: Text(order.lines.map((l) => l.name).join(', '),
-                    maxLines: 1, overflow: TextOverflow.ellipsis, style: theme.textTheme.bodyMedium),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    order.number,
+                    style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                  ),
+                  const Spacer(),
+                  StatusChip(status: order.status),
+                ],
               ),
-              const SizedBox(width: 8),
-              Text(formatMnt(order.total), style: const TextStyle(fontWeight: FontWeight.w700)),
-            ]),
-          ]),
+              const SizedBox(height: 6),
+              Text(
+                '${formatDateTime(order.createdAt)} · ${order.itemCount} бараа',
+                style: theme.textTheme.bodySmall,
+              ),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      order.lines.map((l) => l.name).join(', '),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(formatMnt(order.total), style: const TextStyle(fontWeight: FontWeight.w700)),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

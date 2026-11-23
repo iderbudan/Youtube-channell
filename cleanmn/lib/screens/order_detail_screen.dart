@@ -48,7 +48,9 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     }
     try {
       await p.refresh(o);
-    } catch (_) {/* сүлжээний алдааг чимээгүй алгасна */}
+    } catch (_) {
+      /* сүлжээний алдааг чимээгүй алгасна */
+    }
   }
 
   @override
@@ -56,55 +58,84 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     final order = context.watch<OrdersProvider>().byId(widget.orderId);
     final theme = Theme.of(context);
     if (order == null) {
-      return Scaffold(appBar: AppBar(), body: const Center(child: Text('Захиалга олдсонгүй')));
+      return Scaffold(
+        appBar: AppBar(),
+        body: const Center(child: Text('Захиалга олдсонгүй')),
+      );
     }
     final d = order.delivery;
     return Scaffold(
       appBar: AppBar(title: Text(order.number)),
       body: RefreshIndicator(
         onRefresh: _refresh,
-        child: ListView(padding: const EdgeInsets.all(16), children: [
-          Row(children: [
-            Expanded(child: Text('Төлөв', style: theme.textTheme.titleMedium)),
-            Flexible(flex: 3, child: StatusChip(status: order.status)),
-          ]),
-          const SizedBox(height: 16),
-          Card(child: Padding(padding: const EdgeInsets.all(16), child: StatusTimeline(order: order))),
-          const SizedBox(height: 16),
-          Text('Хүргэлт', style: theme.textTheme.titleMedium),
-          const SizedBox(height: 8),
-          Card(
-            child: Column(children: [
-              ListTile(leading: const Icon(Icons.person_outline), title: Text(d.name), subtitle: Text(d.phone)),
-              ListTile(leading: const Icon(Icons.place_outlined), title: Text(d.fullAddress),
-                  subtitle: d.note.isEmpty ? null : Text(d.note)),
-            ]),
-          ),
-          const SizedBox(height: 16),
-          Text('Бараа', style: theme.textTheme.titleMedium),
-          const SizedBox(height: 8),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: Column(children: [
-                for (final l in order.lines)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Row(children: [
-                      Expanded(child: Text('${l.name} × ${l.quantity}')),
-                      Text(formatMnt(l.total)),
-                    ]),
-                  ),
-                const Divider(),
-                _line('Хүргэлт', order.deliveryFee == 0 ? 'Үнэгүй' : formatMnt(order.deliveryFee)),
-                _line('Нийт', formatMnt(order.total), bold: true),
-              ]),
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            Row(
+              children: [
+                Expanded(child: Text('Төлөв', style: theme.textTheme.titleMedium)),
+                Flexible(flex: 3, child: StatusChip(status: order.status)),
+              ],
             ),
-          ),
-          const SizedBox(height: 8),
-          Text('Захиалсан: ${formatDateTime(order.createdAt)}',
-              style: theme.textTheme.bodySmall, textAlign: TextAlign.center),
-        ]),
+            const SizedBox(height: 16),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: StatusTimeline(order: order),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text('Хүргэлт', style: theme.textTheme.titleMedium),
+            const SizedBox(height: 8),
+            Card(
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.person_outline),
+                    title: Text(d.name),
+                    subtitle: Text(d.phone),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.place_outlined),
+                    title: Text(d.fullAddress),
+                    subtitle: d.note.isEmpty ? null : Text(d.note),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text('Бараа', style: theme.textTheme.titleMedium),
+            const SizedBox(height: 8),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(14),
+                child: Column(
+                  children: [
+                    for (final l in order.lines)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Row(
+                          children: [
+                            Expanded(child: Text('${l.name} × ${l.quantity}')),
+                            Text(formatMnt(l.total)),
+                          ],
+                        ),
+                      ),
+                    const Divider(),
+                    _line('Хүргэлт', order.deliveryFee == 0 ? 'Үнэгүй' : formatMnt(order.deliveryFee)),
+                    _line('Нийт', formatMnt(order.total), bold: true),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Захиалсан: ${formatDateTime(order.createdAt)}',
+              style: theme.textTheme.bodySmall,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: order.status == OrderStatus.pendingPayment
           ? SafeArea(
@@ -113,8 +144,9 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 child: FilledButton.icon(
                   icon: const Icon(Icons.qr_code_2),
                   label: const Text('QPay-ээр төлөх'),
-                  onPressed: () => Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (_) => PaymentScreen(order: order))),
+                  onPressed: () => Navigator.of(
+                    context,
+                  ).pushReplacement(MaterialPageRoute(builder: (_) => PaymentScreen(order: order))),
                 ),
               ),
             )
@@ -122,6 +154,5 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     );
   }
 
-  Widget _line(String a, String b, {bool bold = false}) =>
-      SummaryRow(a, b, bold: bold);
+  Widget _line(String a, String b, {bool bold = false}) => SummaryRow(a, b, bold: bold);
 }

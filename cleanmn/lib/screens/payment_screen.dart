@@ -76,11 +76,13 @@ class _PaymentScreenState extends State<PaymentScreen> with WidgetsBindingObserv
           ),
         );
         if (!mounted) return;
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (_) => OrderDetailScreen(orderId: widget.order.id)));
+        Navigator.of(
+          context,
+        ).pushReplacement(MaterialPageRoute(builder: (_) => OrderDetailScreen(orderId: widget.order.id)));
       } else if (!silent) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Төлбөр хараахан орж ирээгүй байна. Түр хүлээгээд дахин шалгана уу.')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Төлбөр хараахан орж ирээгүй байна. Түр хүлээгээд дахин шалгана уу.')),
+        );
       }
     } catch (e) {
       if (!silent && mounted) {
@@ -92,11 +94,12 @@ class _PaymentScreenState extends State<PaymentScreen> with WidgetsBindingObserv
   }
 
   Future<void> _openBank(BankLink b) async {
-    final ok = await launchUrl(Uri.parse(b.link), mode: LaunchMode.externalApplication)
-        .catchError((_) => false);
+    final ok = await launchUrl(
+      Uri.parse(b.link),
+      mode: LaunchMode.externalApplication,
+    ).catchError((_) => false);
     if (!ok && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('${b.name} апп суулгаагүй байна')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${b.name} апп суулгаагүй байна')));
     }
   }
 
@@ -110,59 +113,76 @@ class _PaymentScreenState extends State<PaymentScreen> with WidgetsBindingObserv
           ? Center(
               child: Padding(
                 padding: const EdgeInsets.all(24),
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  Text(_error!, textAlign: TextAlign.center),
-                  const SizedBox(height: 16),
-                  FilledButton.tonal(onPressed: _loadInvoice, child: const Text('Дахин оролдох')),
-                ]),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(_error!, textAlign: TextAlign.center),
+                    const SizedBox(height: 16),
+                    FilledButton.tonal(onPressed: _loadInvoice, child: const Text('Дахин оролдох')),
+                  ],
+                ),
               ),
             )
           : inv == null
-              ? const Center(child: CircularProgressIndicator())
-              : ListView(padding: const EdgeInsets.all(16), children: [
-                  Text('Захиалга ${widget.order.number}',
-                      textAlign: TextAlign.center, style: theme.textTheme.titleMedium),
-                  Text(formatMnt(inv.amount),
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w800)),
-                  const SizedBox(height: 16),
-                  Center(
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: theme.colorScheme.outlineVariant),
-                      ),
-                      child: QrImageView(data: inv.qrText, size: 220, backgroundColor: Colors.white),
+          ? const Center(child: CircularProgressIndicator())
+          : ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                Text(
+                  'Захиалга ${widget.order.number}',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.titleMedium,
+                ),
+                Text(
+                  formatMnt(inv.amount),
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 16),
+                Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: theme.colorScheme.outlineVariant),
                     ),
+                    child: QrImageView(data: inv.qrText, size: 220, backgroundColor: Colors.white),
                   ),
-                  const SizedBox(height: 8),
-                  Text('Банкны аппаараа QR кодыг уншуулна уу',
-                      textAlign: TextAlign.center, style: theme.textTheme.bodyMedium),
-                  if (inv.bankLinks.isNotEmpty) ...[
-                    const SizedBox(height: 20),
-                    Text('Эсвэл банкаа сонгоод шууд төлөх', style: theme.textTheme.titleSmall),
-                    const SizedBox(height: 10),
-                    GridView.count(
-                      crossAxisCount: 3,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
-                      childAspectRatio: 1.1,
-                      children: [for (final b in inv.bankLinks) _BankTile(bank: b, onTap: () => _openBank(b))],
-                    ),
-                  ],
-                  const SizedBox(height: 16),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Банкны аппаараа QR кодыг уншуулна уу',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyMedium,
+                ),
+                if (inv.bankLinks.isNotEmpty) ...[
+                  const SizedBox(height: 20),
+                  Text('Эсвэл банкаа сонгоод шууд төлөх', style: theme.textTheme.titleSmall),
+                  const SizedBox(height: 10),
+                  GridView.count(
+                    crossAxisCount: 3,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 8,
+                    childAspectRatio: 1.1,
+                    children: [for (final b in inv.bankLinks) _BankTile(bank: b, onTap: () => _openBank(b))],
+                  ),
+                ],
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)),
                     const SizedBox(width: 8),
                     Flexible(
                       child: Text('Төлбөрийг автоматаар шалгаж байна…', style: theme.textTheme.bodySmall),
                     ),
-                  ]),
-                ]),
+                  ],
+                ),
+              ],
+            ),
       bottomNavigationBar: inv == null
           ? null
           : SafeArea(
@@ -198,18 +218,27 @@ class _BankTile extends StatelessWidget {
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(6),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            bank.logo != null
-                ? Image.network(bank.logo!, width: 36, height: 36,
-                    errorBuilder: (_, _, _) => const Icon(Icons.account_balance))
-                : Icon(Icons.account_balance, color: scheme.primary),
-            const SizedBox(height: 6),
-            Text(bank.name,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              bank.logo != null
+                  ? Image.network(
+                      bank.logo!,
+                      width: 36,
+                      height: 36,
+                      errorBuilder: (_, _, _) => const Icon(Icons.account_balance),
+                    )
+                  : Icon(Icons.account_balance, color: scheme.primary),
+              const SizedBox(height: 6),
+              Text(
+                bank.name,
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 11)),
-          ]),
+                style: const TextStyle(fontSize: 11),
+              ),
+            ],
+          ),
         ),
       ),
     );

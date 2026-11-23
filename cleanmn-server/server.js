@@ -61,7 +61,15 @@ export function createApp({ catalog, store, qpay, config = cfg }) {
   const routes = [
     ['GET', /^\/api\/health$/, () => ({ ok: true })],
 
-    ['GET', /^\/api\/products$/, () => catalog],
+    // orderCount = каталогийн анхны тоо + төлөгдсөн захиалгуудын тоо ширхэг ("Хамгийн их захиалсан").
+    ['GET', /^\/api\/products$/, () => {
+      const sold = new Map();
+      for (const o of store.all()) {
+        if (o.status === 'pending_payment' || o.status === 'cancelled') continue;
+        for (const l of o.lines) sold.set(l.productId, (sold.get(l.productId) ?? 0) + l.quantity);
+      }
+      return catalog.map((p) => ({ ...p, orderCount: (p.orderCount ?? 0) + (sold.get(p.id) ?? 0) }));
+    }],
 
     ['POST', /^\/api\/orders$/, async (req) => {
       const body = await readJson(req);

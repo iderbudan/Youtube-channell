@@ -43,14 +43,12 @@ abstract class ApiService {
 }
 
 class HttpApiService implements ApiService {
-  HttpApiService(this.baseUrl, {http.Client? client})
-      : _client = client ?? http.Client();
+  HttpApiService(this.baseUrl, {http.Client? client}) : _client = client ?? http.Client();
 
   final String baseUrl;
   final http.Client _client;
 
-  Uri _u(String path, [Map<String, String>? q]) =>
-      Uri.parse('$baseUrl$path').replace(queryParameters: q);
+  Uri _u(String path, [Map<String, String>? q]) => Uri.parse('$baseUrl$path').replace(queryParameters: q);
 
   Future<dynamic> _send(Future<http.Response> req) async {
     final http.Response res;
@@ -72,39 +70,39 @@ class HttpApiService implements ApiService {
   @override
   Future<List<Product>> fetchProducts() async {
     final data = await _send(_client.get(_u('/api/products')));
-    return (data as List)
-        .map((p) => Product.fromJson(p as Map<String, dynamic>))
-        .toList();
+    return (data as List).map((p) => Product.fromJson(p as Map<String, dynamic>)).toList();
   }
 
   @override
   Future<Order> createOrder(List<OrderItemRequest> items, DeliveryInfo delivery) async {
-    final data = await _send(_client.post(
-      _u('/api/orders'),
-      headers: _json,
-      body: jsonEncode({
-        'items': items.map((i) => i.toJson()).toList(),
-        'delivery': delivery.toJson(),
-      }),
-    ));
+    final data = await _send(
+      _client.post(
+        _u('/api/orders'),
+        headers: _json,
+        body: jsonEncode({'items': items.map((i) => i.toJson()).toList(), 'delivery': delivery.toJson()}),
+      ),
+    );
     return Order.fromJson(data as Map<String, dynamic>);
   }
 
   @override
   Future<QPayInvoice> createQPayInvoice(Order order) async {
-    final data = await _send(_client.post(
-      _u('/api/orders/${order.id}/qpay', {'token': order.token}),
-      headers: _json,
-    ));
+    final data = await _send(
+      _client.post(_u('/api/orders/${order.id}/qpay', {'token': order.token}), headers: _json),
+    );
     return QPayInvoice.fromJson(data as Map<String, dynamic>);
   }
 
   @override
   Future<PaymentCheck> checkPayment(Order order) async {
-    final data = await _send(_client.post(
-      _u('/api/orders/${order.id}/payment-check', {'token': order.token}),
-      headers: _json,
-    )) as Map<String, dynamic>;
+    final data =
+        await _send(
+              _client.post(
+                _u('/api/orders/${order.id}/payment-check', {'token': order.token}),
+                headers: _json,
+              ),
+            )
+            as Map<String, dynamic>;
     return PaymentCheck(
       paid: data['paid'] as bool,
       order: Order.fromJson(data['order'] as Map<String, dynamic>),

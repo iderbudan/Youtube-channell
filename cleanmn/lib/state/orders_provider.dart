@@ -12,8 +12,7 @@ class OrdersProvider extends ChangeNotifier {
   final List<Order> _orders;
 
   /// Шинэ нь эхэндээ.
-  List<Order> get orders =>
-      [..._orders]..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+  List<Order> get orders => [..._orders]..sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
   Order? byId(String id) => _orders.where((o) => o.id == id).firstOrNull;
 
@@ -43,8 +42,9 @@ class OrdersProvider extends ChangeNotifier {
 
   /// Дуусаагүй бүх захиалгын төлөвийг шинэчилнэ.
   Future<void> refreshActive() async {
-    final active = _orders.where((o) =>
-        o.status != OrderStatus.delivered && o.status != OrderStatus.cancelled);
+    final active = _orders.where(
+      (o) => o.status != OrderStatus.delivered && o.status != OrderStatus.cancelled,
+    );
     await Future.wait(active.map((o) => refresh(o).catchError((_) => o)));
   }
 

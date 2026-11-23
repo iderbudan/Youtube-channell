@@ -84,84 +84,105 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       appBar: AppBar(title: const Text('Хүргэлтийн мэдээлэл')),
       body: Form(
         key: _form,
-        child: ListView(padding: const EdgeInsets.all(16), children: [
-          TextFormField(
-            controller: _name,
-            textCapitalization: TextCapitalization.words,
-            textInputAction: TextInputAction.next,
-            decoration: const InputDecoration(labelText: 'Хүлээн авагчийн нэр', prefixIcon: Icon(Icons.person_outline)),
-            validator: (v) => validateRequired(v, 'Нэрээ'),
-          ),
-          gap,
-          TextFormField(
-            controller: _phone,
-            keyboardType: TextInputType.phone,
-            textInputAction: TextInputAction.next,
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9+ ]')), LengthLimitingTextInputFormatter(13)],
-            decoration: const InputDecoration(
-                labelText: 'Утасны дугаар', hintText: '99112233', prefixIcon: Icon(Icons.phone_outlined)),
-            validator: validatePhone,
-          ),
-          gap,
-          DropdownButtonFormField<String>(
-            initialValue: _district,
-            isExpanded: true,
-            decoration: const InputDecoration(labelText: 'Дүүрэг (Улаанбаатар)', prefixIcon: Icon(Icons.location_city_outlined)),
-            items: [for (final d in ulaanbaatarDistricts) DropdownMenuItem(value: d, child: Text(d))],
-            onChanged: (v) => setState(() => _district = v),
-            validator: (v) => v == null ? 'Дүүргээ сонгоно уу' : null,
-          ),
-          gap,
-          TextFormField(
-            controller: _khoroo,
-            keyboardType: TextInputType.number,
-            textInputAction: TextInputAction.next,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(2)],
-            decoration: const InputDecoration(labelText: 'Хороо', hintText: '3', prefixIcon: Icon(Icons.tag)),
-            validator: (v) => validateRequired(v, 'Хороогоо'),
-          ),
-          gap,
-          TextFormField(
-            controller: _address,
-            maxLines: 2,
-            textInputAction: TextInputAction.next,
-            decoration: const InputDecoration(
-              labelText: 'Дэлгэрэнгүй хаяг',
-              hintText: 'Хотхон, байр, орц, давхар, тоот',
-              prefixIcon: Icon(Icons.home_outlined),
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            TextFormField(
+              controller: _name,
+              textCapitalization: TextCapitalization.words,
+              textInputAction: TextInputAction.next,
+              decoration: const InputDecoration(
+                labelText: 'Хүлээн авагчийн нэр',
+                prefixIcon: Icon(Icons.person_outline),
+              ),
+              validator: (v) => validateRequired(v, 'Нэрээ'),
             ),
-            validator: (v) => validateRequired(v, 'Хаягаа'),
-          ),
-          gap,
-          TextFormField(
-            controller: _note,
-            maxLines: 2,
-            decoration: const InputDecoration(
-              labelText: 'Нэмэлт тайлбар (заавал биш)',
-              hintText: 'Орцны код, хүргэх цаг гэх мэт',
-              prefixIcon: Icon(Icons.notes),
+            gap,
+            TextFormField(
+              controller: _phone,
+              keyboardType: TextInputType.phone,
+              textInputAction: TextInputAction.next,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9+ ]')),
+                LengthLimitingTextInputFormatter(13),
+              ],
+              decoration: const InputDecoration(
+                labelText: 'Утасны дугаар',
+                hintText: '99112233',
+                prefixIcon: Icon(Icons.phone_outlined),
+              ),
+              validator: validatePhone,
             ),
-          ),
-          const SizedBox(height: 20),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: Column(children: [
-                _line('Бараа (${cart.count})', formatMnt(cart.subtotal)),
-                _line('Хүргэлт', cart.deliveryFee == 0 ? 'Үнэгүй' : formatMnt(cart.deliveryFee)),
-                const Divider(),
-                _line('Төлөх дүн', formatMnt(cart.total), bold: true),
-              ]),
+            gap,
+            DropdownButtonFormField<String>(
+              initialValue: _district,
+              isExpanded: true,
+              decoration: const InputDecoration(
+                labelText: 'Дүүрэг (Улаанбаатар)',
+                prefixIcon: Icon(Icons.location_city_outlined),
+              ),
+              items: [for (final d in ulaanbaatarDistricts) DropdownMenuItem(value: d, child: Text(d))],
+              onChanged: (v) => setState(() => _district = v),
+              validator: (v) => v == null ? 'Дүүргээ сонгоно уу' : null,
             ),
-          ),
-          const SizedBox(height: 12),
-          const ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: Icon(Icons.qr_code_2, size: 32),
-            title: Text('Төлбөрийн хэлбэр: QPay'),
-            subtitle: Text('Бүх банкны апп-аар QR уншуулж эсвэл шууд төлнө'),
-          ),
-        ]),
+            gap,
+            TextFormField(
+              controller: _khoroo,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(2)],
+              decoration: const InputDecoration(
+                labelText: 'Хороо',
+                hintText: '3',
+                prefixIcon: Icon(Icons.tag),
+              ),
+              validator: (v) => validateRequired(v, 'Хороогоо'),
+            ),
+            gap,
+            TextFormField(
+              controller: _address,
+              maxLines: 2,
+              textInputAction: TextInputAction.next,
+              decoration: const InputDecoration(
+                labelText: 'Дэлгэрэнгүй хаяг',
+                hintText: 'Хотхон, байр, орц, давхар, тоот',
+                prefixIcon: Icon(Icons.home_outlined),
+              ),
+              validator: (v) => validateRequired(v, 'Хаягаа'),
+            ),
+            gap,
+            TextFormField(
+              controller: _note,
+              maxLines: 2,
+              decoration: const InputDecoration(
+                labelText: 'Нэмэлт тайлбар (заавал биш)',
+                hintText: 'Орцны код, хүргэх цаг гэх мэт',
+                prefixIcon: Icon(Icons.notes),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(14),
+                child: Column(
+                  children: [
+                    _line('Бараа (${cart.count})', formatMnt(cart.subtotal)),
+                    _line('Хүргэлт', cart.deliveryFee == 0 ? 'Үнэгүй' : formatMnt(cart.deliveryFee)),
+                    const Divider(),
+                    _line('Төлөх дүн', formatMnt(cart.total), bold: true),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            const ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Icon(Icons.qr_code_2, size: 32),
+              title: Text('Төлбөрийн хэлбэр: QPay'),
+              subtitle: Text('Бүх банкны апп-аар QR уншуулж эсвэл шууд төлнө'),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
@@ -177,6 +198,5 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  Widget _line(String a, String b, {bool bold = false}) =>
-      SummaryRow(a, b, bold: bold);
+  Widget _line(String a, String b, {bool bold = false}) => SummaryRow(a, b, bold: bold);
 }

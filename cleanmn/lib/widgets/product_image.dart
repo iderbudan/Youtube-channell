@@ -11,15 +11,13 @@ class ProductImage extends StatelessWidget {
   final double size;
   final double radius;
 
+  // Зөөлөн пастел өнгө — ангилал бүрт өөр.
   static const _tints = {
-    ProductCategory.soap: Color(0xFFE3F2FD),
-    ProductCategory.detergent: Color(0xFFE8EAF6),
-    ProductCategory.broom: Color(0xFFFFF3E0),
-    ProductCategory.disinfectant: Color(0xFFE0F2F1),
-    ProductCategory.towel: Color(0xFFFCE4EC),
-    ProductCategory.other: Color(0xFFF1F8E9),
+    ProductCategory.household: Color(0xFFE4F4FB),
+    ProductCategory.disinfection: Color(0xFFE2F5EF),
+    ProductCategory.construction: Color(0xFFFDF0E3),
+    ProductCategory.other: Color(0xFFF1EDFA),
   };
-
   @override
   Widget build(BuildContext context) {
     final dark = Theme.of(context).brightness == Brightness.dark;

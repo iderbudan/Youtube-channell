@@ -61,6 +61,8 @@ test('захиалга → QPay → төлбөр → админ төлөв', () 
   assert.equal((await call('PATCH', `/api/admin/orders/${id}`, { status: 'delivering' })).status, 401);
   const upd = await call('PATCH', `/api/admin/orders/${id}`, { status: 'delivering' }, { Authorization: 'Bearer adm' });
   assert.equal(upd.body.status, 'delivering');
+  const prods = await call('GET', '/api/products');
+  assert.equal(prods.body.find((x) => x.id === 'p01').orderCount, 2); // төлөгдсөн 2ш тоологдоно
   const got = await call('GET', `/api/orders/${id}?token=${token}`);
   assert.deepEqual(got.body.history.map((h) => h.status), ['pending_payment', 'paid', 'delivering']);
 }));

@@ -1,5 +1,7 @@
 import 'package:cleanmn/data/catalog.dart';
 import 'package:cleanmn/models/order.dart';
+import 'package:cleanmn/models/product.dart';
+import 'package:cleanmn/state/catalog_provider.dart';
 import 'package:cleanmn/services/mock_api_service.dart';
 import 'package:cleanmn/state/cart_provider.dart';
 import 'package:cleanmn/utils/format.dart';
@@ -70,7 +72,13 @@ void main() {
       final cart = CartProvider(null)..add(demoCatalog.first, 2);
       final order = await api.createOrder(
         cart.toRequest(),
-        const DeliveryInfo(name: 'Бат', phone: '99112233', district: 'Баянгол', khoroo: '3', address: '12-р байр'),
+        const DeliveryInfo(
+          name: 'Бат',
+          phone: '99112233',
+          district: 'Баянгол',
+          khoroo: '3',
+          address: '12-р байр',
+        ),
       );
       expect(order.status, OrderStatus.pendingPayment);
       expect(order.total, 13000 + 5000);
@@ -85,13 +93,34 @@ void main() {
     });
   });
 
+  test('Хамгийн их захиалсан: захиалгын тоогоор эрэмбэлнэ', () async {
+    final catalog = CatalogProvider(MockApiService());
+    await catalog.load();
+    final top = catalog.popular(3);
+    expect(top.length, 3);
+    expect(top.first.orderCount >= top[1].orderCount, isTrue);
+    expect(top[1].orderCount >= top[2].orderCount, isTrue);
+    expect(top.first.name, 'Гарын шингэн саван');
+    catalog.setCategory(ProductCategory.construction);
+    expect(catalog.visible.every((p) => p.category == ProductCategory.construction), isTrue);
+    expect(catalog.isHome, isFalse);
+    catalog.resetFilters();
+    expect(catalog.isHome, isTrue);
+  });
+
   test('Order JSON round-trip', () {
     final o = Order(
       id: '1',
       number: 'CM-1',
       token: 't',
       lines: const [OrderLine(productId: 'p01', name: 'Саван', price: 6500, quantity: 2)],
-      delivery: const DeliveryInfo(name: 'А', phone: '99112233', district: 'Хан-Уул', khoroo: '1', address: 'x'),
+      delivery: const DeliveryInfo(
+        name: 'А',
+        phone: '99112233',
+        district: 'Хан-Уул',
+        khoroo: '1',
+        address: 'x',
+      ),
       subtotal: 13000,
       deliveryFee: 5000,
       status: OrderStatus.delivering,

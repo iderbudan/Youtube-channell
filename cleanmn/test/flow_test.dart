@@ -20,23 +20,29 @@ Future<void> _runFlow(WidgetTester tester, Size physicalSize, double textScale) 
 
   await tester.pumpWidget(CleanMNApp(api: MockApiService()));
   await tester.pump(const Duration(seconds: 1)); // каталог ачаалах
-  expect(find.text('Гарын шингэн саван'), findsOneWidget);
+  expect(find.text('Хамгийн их захиалсан'), findsOneWidget);
+  expect(find.text('Гарын шингэн саван'), findsWidgets);
 
-  // Ангиллаар шүүх
-  await tester.scrollUntilVisible(
-    find.text('Шүүр, арчуур'),
-    100,
-    scrollable: find.descendant(
-      of: find.byKey(const Key('categories')),
-      matching: find.byType(Scrollable),
-    ),
-  );
-  await tester.ensureVisible(find.text('Шүүр, арчуур'));
+  // ☰ цэс → 3. Барилгын материал
+  await tester.tap(find.byKey(const Key('menu')));
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Шүүр, арчуур'));
-  await tester.pump();
+  expect(find.text('Ариутгалын бүтээгдэхүүн'), findsWidgets);
+  await tester.tap(find.byKey(const Key('menu-construction')));
+  await tester.pumpAndSettle();
+  expect(find.text('Усан будаг (цагаан)'), findsOneWidget);
   expect(find.text('Гарын шингэн саван'), findsNothing);
+  expect(find.text('Хамгийн их захиалсан'), findsNothing);
+
+  // CleanMN дээр дарахад нүүр хуудас руу буцна
+  await tester.tap(find.byKey(const Key('logo')));
+  await tester.pumpAndSettle();
+  expect(find.text('Хамгийн их захиалсан'), findsOneWidget);
+
+  // Хайлт
+  await tester.enterText(find.byType(TextField).first, 'Шал арчуур');
+  await tester.pump();
   expect(find.text('Шал арчуур + хувин'), findsOneWidget);
+  expect(find.text('Хамгийн их захиалсан'), findsNothing);
 
   // Сагсанд нэмэх
   await tester.tap(find.byTooltip('Сагсанд нэмэх').first);

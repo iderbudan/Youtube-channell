@@ -8,11 +8,10 @@ class CartItem {
 
   int get total => product.price * quantity;
 
-  Map<String, dynamic> toJson() =>
-      {'product': product.toJson(), 'quantity': quantity};
+  Map<String, dynamic> toJson() => {'product': product.toJson(), 'quantity': quantity};
 
   factory CartItem.fromJson(Map<String, dynamic> j) => CartItem(
-        product: Product.fromJson(j['product'] as Map<String, dynamic>),
-        quantity: (j['quantity'] as num).toInt(),
-      );
+    product: Product.fromJson(j['product'] as Map<String, dynamic>),
+    quantity: (j['quantity'] as num).toInt(),
+  );
 }
