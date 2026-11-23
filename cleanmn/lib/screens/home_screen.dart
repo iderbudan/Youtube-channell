@@ -70,7 +70,8 @@ class HomeScreen extends StatelessWidget {
                       onTap: () => catalog.setCategory(null)),
                   for (final c in ProductCategory.values)
                     _CatChip(
-                      label: '${c.emoji} ${c.label}',
+                      emoji: c.emoji,
+                      label: c.label,
                       selected: catalog.category == c,
                       onTap: () => catalog.setCategory(catalog.category == c ? null : c),
                     ),
@@ -144,8 +145,11 @@ class _Banner extends StatelessWidget {
   }
 }
 
+/// Ангиллын чип. Emoji-г тогтмол хэмжээтэй avatar дотор тусад нь харуулдаг:
+/// вэб дээр emoji фонт хожуу ачаалагдахад шошгоны текст таслагдахаас сэргийлнэ.
 class _CatChip extends StatelessWidget {
-  const _CatChip({required this.label, required this.selected, required this.onTap});
+  const _CatChip({this.emoji, required this.label, required this.selected, required this.onTap});
+  final String? emoji;
   final String label;
   final bool selected;
   final VoidCallback onTap;
@@ -154,7 +158,13 @@ class _CatChip extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(right: 8),
         child: FilterChip(
-          label: Text(label),
+          avatar: emoji == null
+              ? null
+              : SizedBox.square(
+                  dimension: 18,
+                  child: FittedBox(child: Text(emoji!, textAlign: TextAlign.center)),
+                ),
+          label: Text(label, maxLines: 1, softWrap: false),
           selected: selected,
           showCheckmark: false,
           onSelected: (_) => onTap(),

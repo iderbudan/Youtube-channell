@@ -24,16 +24,16 @@ Future<void> _runFlow(WidgetTester tester, Size physicalSize, double textScale) 
 
   // Ангиллаар шүүх
   await tester.scrollUntilVisible(
-    find.text('🧹 Шүүр, арчуур'),
+    find.text('Шүүр, арчуур'),
     100,
     scrollable: find.descendant(
       of: find.byKey(const Key('categories')),
       matching: find.byType(Scrollable),
     ),
   );
-  await tester.ensureVisible(find.text('🧹 Шүүр, арчуур'));
+  await tester.ensureVisible(find.text('Шүүр, арчуур'));
   await tester.pumpAndSettle();
-  await tester.tap(find.text('🧹 Шүүр, арчуур'));
+  await tester.tap(find.text('Шүүр, арчуур'));
   await tester.pump();
   expect(find.text('Гарын шингэн саван'), findsNothing);
   expect(find.text('Шал арчуур + хувин'), findsOneWidget);
